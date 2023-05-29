@@ -1,15 +1,15 @@
-import React from 'react';
-import { Skeleton } from './Skeleton';
-import { User } from './User';
+import React from "react";
+import { Skeleton } from "./Skeleton";
+import { User } from "./User";
 
 export const Users = ({
   items,
   isLoading,
-  onChangeSearchValue,
   searchValue,
-  onClickInvite,
+  onChangeSearchValue,
   invites,
-  onClickSendInvites,
+  onClickInvite,
+  onClickSendInvites
 }) => {
   return (
     <>
@@ -35,25 +35,19 @@ export const Users = ({
           {items
             .filter((obj) => {
               const fullName = (obj.first_name + obj.last_name).toLowerCase();
+
               return (
                 fullName.includes(searchValue.toLowerCase()) ||
                 obj.email.toLowerCase().includes(searchValue.toLowerCase())
               );
             })
             .map((obj) => (
-              <User
-                onClickInvite={onClickInvite}
-                isInvited={invites.includes(obj.id)}
-                key={obj.id}
-                {...obj}
-              />
+              <User onClickInvite={onClickInvite} isInvited={invites.includes(obj.id)} key={obj.id} {...obj} />
             ))}
         </ul>
       )}
       {
-        invites.length > 0 ? <button onClick={() => onClickSendInvites()} className="send-invite-btn">
-        Отправить приглашение
-      </button> : ''
+        invites.length > 0 && (<button onClick={onClickSendInvites} className="send-invite-btn">Отправить приглашение</button>)
       }
     </>
   );
